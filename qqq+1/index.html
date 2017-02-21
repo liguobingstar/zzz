@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script language="JavaScript" src="http://code.jquery.com/jquery-2.2.4.js"></script>
+    <style>
+        div{
+            border: 1px solid red;
+            width: 500px;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+        <div id="duiHuaKuang">
+        </div>
+        内容：<input type="text" id="message">
+        姓名：<input  type="text" id ='name'>
+        <a href="javascript:void(0)" onclick="send()">fasong</a>
+        <a href="javascript:void(0)" onclick="exit()">tuichu</a>
+</body>
+<script type="text/javascript">
+    var ws =new WebSocket("ws://127.0.0.1:8787");
+    //握手之后直接触发
+    ws.onopen=function(){
+        console.log('链接状态'+ws.readyState);
+        $('#duiHuaKuang').html('链接状态'+ws.readyState+"<br>");
+    }
+    //后台send方法之后触发onmessage
+    ws.onmessage=function(evn){
+        $('#duiHuaKuang').append(evn.data+'<br>');
+    }
+    function send(){
+        var message =$('#message').val();
+        var name =$('#name').val();
+        var str ="{msg:'"+message+"',name:'"+name+"'}";
+        alert(str);
+        ws.send(str);
+    }
+    function exit(){
+            ws.close();
+    }
+    ws.onclose = function(evt) {
+        console.log("WebSocket关闭!");
+        console.log(evt);
+    };
+    ws.onerror = function(evt) {
+        console.log("WebSocket出错!");
+    };
+</script>
+</html>
