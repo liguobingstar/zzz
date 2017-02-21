@@ -2,17 +2,7 @@
  * Created by Administrator on 2017/2/20.
  */
 var WebScoketSever =require('ws').Server;
-var wss =new WebScoketSever({port:8787});
-function fasong(state,obj){
-    wss.clients.forEach(function each(client){
-        if(state==1){
-            client.send(obj.name+":"+obj.msg)
-        }
-        if(state==0){
-           client.send(obj.name+'退出了聊调试')
-        }
-    })
-}
+
 
 wss.on('connection',function(ws){
     ws.send(clientLength+"人");
