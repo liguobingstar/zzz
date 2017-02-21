@@ -13,7 +13,6 @@ function fasong(state,obj){
         }
     })
 }
-var clientLength=1;
 
 wss.on('connection',function(ws){
     ws.send(clientLength+"人");
